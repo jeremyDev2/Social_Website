@@ -5,15 +5,15 @@ from django.shortcuts import render
 from .forms import LoginForm
 
 def user_login(request):
-    if request.method =="POST":
+    if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
+            #only valid data
             cd = form.cleaned_data
-            user = authenticate(request,username=cd['username'], password=cd['password'])
-            
+            user = authenticate(request, user_name=cd['user_name'], password=cd['password'])
             if user is not None:
                 if user.is_active:
-                    login(request, user)
+                    login(request,user)
                     return HttpResponse('Authenticated succesfully')
                 else:
                     return HttpResponse('Disabled account')
