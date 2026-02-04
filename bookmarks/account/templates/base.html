@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Bookmarks{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header id="header">
+        <span class="logo">Bookmarks</span>
+    </header>
+
+    <main id="content">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>
+
