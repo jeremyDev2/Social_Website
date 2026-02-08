@@ -1,11 +1,10 @@
-from http.client import HTTPConnection
-import re
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
+from django.contrib import messages
 
 def user_login(request):
     if request.method == 'POST':
@@ -57,10 +56,13 @@ def edit(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            messages.success(request, "Profile updated succesfully")
         else:
-            user_form = UserEditForm(instance=request.user)
-            profile_form = ProfileEditForm(instance=request.user.profile)
-        return render(request, 'account/edit.html',{'user_form':user_form, 'profile_form': profile_form})
+            messages.error(request, "Error updating your peofile")
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+    return render(request, 'account/edit.html',{'user_form':user_form, 'profile_form': profile_form})
 
 
 
