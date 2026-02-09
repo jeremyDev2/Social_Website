@@ -56,7 +56,8 @@ media/
 
 # Django local environment files
 .env
-.env.*
+*.crt
+*.key
 .venv/
 venv/
 ENV/
