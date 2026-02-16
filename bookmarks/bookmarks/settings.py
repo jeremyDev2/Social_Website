@@ -138,3 +138,8 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
                            'account.authentication.EmailAuthBackend',
                            'social_core.backends.google.GoogleOAuth2',
                            ]
+
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type('application/javascript', '.js', True)
+    mimetypes.add_type('text/css', '.css', True)
