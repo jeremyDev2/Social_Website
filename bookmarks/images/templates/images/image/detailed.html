@@ -37,10 +37,10 @@
 const url = '{% url "images:like" %}';
 var options = {method: 'POST', headers: {'X-CSRFToken': csrftoken},mode: 'same-origin'}
 document.querySelector('a.like').addEventListener('click', function(e){e.preventDefault();
-var likeButton = this;
+var likeButton= this;
 
 // add request body
-var formData = new FormData();
+var formData= new FormData();
 formData.append('id', likeButton.dataset.id);
 formData.append('action', likeButton.dataset.action);
 options['body'] = formData;
