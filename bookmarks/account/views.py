@@ -1,6 +1,6 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile
@@ -65,4 +65,14 @@ def edit(request):
     return render(request, 'account/edit.html',{'user_form':user_form, 'profile_form': profile_form})
 
 
+User = get_user_model()
 
+@login_required
+def user_list(request):
+    users = User.objects.filter(is_active=True)
+    return render(request, 'account/user/list.html', {'section':'people', 'user': users})
+
+@login_required
+def user_detail(request, username):
+    user = get_object_or_404(User, username=username, is_active=True)
+    return render(request, 'account/user/detail.html', {'section':'people', 'user':user})
