@@ -84,3 +84,14 @@ def image_list(request):
     if images_only:
         return render(request, 'images/image/list_images.html', {'section' : 'images', 'images':images})
     return render(request, 'images/image/list.html',{'section': 'images', 'images': images})
+
+@login_required
+def image_ranking(request):
+    # dict{bytes}
+    image_ranking_dict = r.zrange('image_ranking', 0, -1, desc=True)[:10]
+    # casting id's
+    image_ranking_ids = [int(id) for id in image_ranking_dict]
+    most_viewed = list(Image.objects.filter(id_in = image_ranking_ids))
+    most_viewed.sort(key=lambda j: image_ranking_ids.index(j.id))
+    
+    return render(request, 'images/image/ranking.html', {'section': 'images', 'most_viewed' : most_viewed})
