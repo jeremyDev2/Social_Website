@@ -7,5 +7,5 @@ class ImagesConfig(AppConfig):
     
     #called when the app is initialized
     def ready(self):
-        import signal handlers
+        #import signal handlers
         import images.signals
